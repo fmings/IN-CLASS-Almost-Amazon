@@ -3,6 +3,8 @@ import { signOut } from '../utils/auth';
 import { showBooks } from '../pages/books';
 import { getAuthors, getFavoriteAuthors } from '../api/authorData';
 import { showAuthors } from '../pages/authors';
+import { searchBooks } from '../api/mergedData';
+import renderToDOM from '../utils/renderToDom';
 
 // navigation events
 const navigationEvents = () => {
@@ -43,7 +45,16 @@ const navigationEvents = () => {
       // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
       // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
       // OTHERWISE SHOW THE STORE
-
+      searchBooks(searchValue).then(({ books, authors }) => {
+        if (books.length > 0) {
+          showBooks(books);
+        } else if (authors.length > 0) {
+          showAuthors(authors);
+        } else {
+          const domString = '<h1>No Results</h1>';
+          renderToDOM('#store', domString);
+        }
+      });
       document.querySelector('#search').value = '';
     }
   });
