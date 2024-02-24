@@ -1,6 +1,6 @@
 // for merged promises
 
-import { getSingleAuthor } from './authorData';
+import { getAuthorBooks, getSingleAuthor } from './authorData';
 import { getSingleBook } from './bookData';
 
 // const getBookDetails = (bookFirebaseKey) => new Promise((resolve, reject) => {
@@ -20,9 +20,10 @@ const getBookDetailsPT2 = async (bookFirebaseKey) => {
   return { ...bookObject, authorObject };
 };
 
-// const getAuthorDetails = (firebaseKey) => new Promise((resolve, reject) => {
-//   getSingleAuthor(firebaseKey).then(authorObject) => {
-//     getSingleBook(authorObject.bo)
-//   }
+const getAuthorDetails = async (authorFirebaseKey) => {
+  const authorObject = await getSingleAuthor(authorFirebaseKey);
+  const authorsBooks = await getAuthorBooks(authorFirebaseKey);
+  return { ...authorObject, books: authorsBooks };
+};
 
-export default getBookDetailsPT2;
+export { getBookDetailsPT2, getAuthorDetails };
