@@ -36,9 +36,9 @@ const deleteAuthorandAuthorBooks = async (authorFirebaseKey) => {
 };
 
 // TODO: STRETCH...SEARCH BOOKS
-const searchBooks = async (searchValue) => {
-  const allBooks = await getBooks();
-  const allAuthors = await getAuthors();
+const searchBooks = async (uid, searchValue) => {
+  const allBooks = await getBooks(uid);
+  const allAuthors = await getAuthors(uid);
   const filteredBooks = await allBooks.filter((book) => (
     book.title.toLowerCase().includes(searchValue)
     || book.description.toLowerCase().includes(searchValue)
